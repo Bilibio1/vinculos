@@ -96,7 +96,7 @@ const ONBOARDING_SLIDES = [
 async function callClaude(messages, systemPrompt, maxTokens = 1000) {
   const res = await fetch("/api/claude", {
     method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: maxTokens, system: systemPrompt, messages }),
+    body: JSON.stringify({ model: "claude-sonnet-4-6", max_tokens: maxTokens, system: systemPrompt, messages }),
   });
   const d = await res.json();
   return d.content?.[0]?.text || "";
@@ -106,7 +106,7 @@ async function extractTextFromImage(base64, mediaType) {
   const res = await fetch("/api/claude", {
     method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      model: "claude-sonnet-4-20250514", max_tokens: 2000,
+      model: "claude-sonnet-4-6", max_tokens: 2000,
       system: "Você extrai texto de prints de conversas. Retorne APENAS o texto no formato 'Nome: mensagem' por linha. Sem comentários.",
       messages: [{ role: "user", content: [{ type: "image", source: { type: "base64", media_type: mediaType, data: base64 } }, { type: "text", text: "Extraia o texto desta conversa." }] }],
     }),
